@@ -62,12 +62,14 @@ public class AddNoteFragment extends Fragment implements View.OnClickListener{
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         email = shared.getString("email","");
         note= addnote.getText().toString();
-        db.execSQL("INSERT INTO Allnotes VALUES(NULL, '"+note+"', '"+email+"','"+date+"');");
+        if (!note.equals("")) {
+            db.execSQL("INSERT INTO Allnotes VALUES(NULL, '" + note + "', '" + email + "','" + date + "');");
 
-        SharedPreferences sh = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sh = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        sh.edit().putBoolean("firstTime",true).commit();
-        Toast.makeText(c,note + email,Toast.LENGTH_LONG).show();
-
+            sh.edit().putBoolean("firstTime", true).commit();
+            Toast.makeText(c, note, Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(c, "Please enter some text..", Toast.LENGTH_LONG).show();
     }
 }

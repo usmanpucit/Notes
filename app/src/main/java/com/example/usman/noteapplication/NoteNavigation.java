@@ -23,6 +23,7 @@ public class NoteNavigation extends AppCompatActivity implements View.OnClickLis
     private SQLiteDatabase db;
     private String ss;
     private Cursor cursor;
+    int id;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +37,18 @@ public class NoteNavigation extends AppCompatActivity implements View.OnClickLis
         db = openOrCreateDatabase("note",MODE_PRIVATE,null);
         shared = getSharedPreferences("loginhandling",MODE_PRIVATE); // need a where condition here
         ss = shared.getString("email","").toString();
-        cursor = db.rawQuery("SELECT note , date from Allnotes where email ='"+ss+"' ", null);
+        cursor = db.rawQuery("SELECT note , date, id from Allnotes where email ='"+ss+"' ", null);
         cursor.moveToFirst();
         updatenote.setText(cursor.getString(cursor.getColumnIndex("note")));
+        id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
     }
 
     @Override
     public void onClick(View v) {
 
         String p = updatenote.getText().toString();
-        db.execSQL("UPDATE Allnotes SET note = '"+p+"' where email ='"+ss+"' ");
+
+        db.execSQL("UPDATE Allnotes SET note = '"+p+"' where id ='"+id+"'  ");
         Intent i = new Intent(this, NoteActivity.class);
         startActivity(i);
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,9 @@ public class AllNoteFragment extends Fragment implements AdapterView.OnItemClick
             public void onClick(DialogInterface dialog, int which) {
 
                 Note n = noteList.get(position);
-                db.execSQL("DELETE FROM notes WHERE id = "+n.id+"");
+             //   Log.d(n.toString(), null);
+               // Toast.makeText(c, position+"", Toast.LENGTH_SHORT).show();
+                db.execSQL("DELETE FROM Allnotes WHERE id = "+n.id+"");
                 noteList.remove(position);
                 noteAdapter.notifyDataSetChanged();
                 Toast.makeText(c, position+"", Toast.LENGTH_SHORT).show();
